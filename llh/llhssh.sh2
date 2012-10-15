@@ -1,0 +1,20 @@
+#!/bin/bash
+
+
+trap 'exit 1' 2
+
+#LLH_CMD="/home/work/opbin/wwy/bin/llh.sh"
+
+ssh_cmd="$1"
+ssh_server_list=(
+	`cat -`
+) 
+
+
+for ((i=0;i<${#ssh_server_list[@]};i++));do
+
+	printf "\033[0;36;40m%3d\033[1;30;40m: =============== \033[0;33;40m%-18s \033[1;30;40m===============\033[0m\n" $i ${ssh_server_list[$i]}
+	ssh -n "${ssh_server_list[$i]}" "$ssh_cmd"
+	echo "  --- $? ---"
+
+done

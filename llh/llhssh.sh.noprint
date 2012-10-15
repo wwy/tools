@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+trap break 2
+
+LLH_CMD=~/opbin/wwy/bin/llh.sh
+ssh_str="$1"
+ssh_cmd="$2"
+
+ssh_server_list=(
+	`$LLH_CMD $1`
+) || {
+	echo ${ssh_server_list[@]}
+	exit 1
+}
+
+
+for ((i=0;i<${#ssh_server_list[@]};i++));do
+
+	ssh -n "${ssh_server_list[$i]}" "$ssh_cmd"
+
+done
